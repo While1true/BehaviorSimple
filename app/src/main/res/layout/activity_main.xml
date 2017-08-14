@@ -1,43 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinate"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-<android.support.v4.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:gravity="bottom"
-    android:layout_height="wrap_content">
-    <FrameLayout
-        android:orientation="vertical"
-        android:layout_gravity="bottom"
+    android:layout_height="match_parent">
+
+    <ProgressBar
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:indeterminate="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="-400px" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="-200px"
+        android:src="@mipmap/ic_launcher" />
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary">
+        android:gravity="bottom">
 
-        <ImageView
-            android:id="@+id/ic1"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/snap" />
-        <ImageView
-            android:id="@+id/ic2"
-            android:layout_marginTop="90dp"
-            android:layout_width="match_parent"
-            android:layout_height="211dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/grid" />
-    </FrameLayout>
-</android.support.v4.widget.NestedScrollView>
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ic1"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/snap" />
+
+            <ImageView
+                android:id="@+id/ic2"
+                android:layout_width="match_parent"
+                android:layout_height="211dp"
+                android:layout_marginTop="90dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/grid" />
+        </FrameLayout>
+    </android.support.v4.widget.NestedScrollView>
+
     <android.support.v7.widget.RecyclerView
-        android:background="#f00"
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
-        app:layout_behavior="com.example.ck.nest.MyBehavior"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
-    <!--<ImageView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:src="@drawable/bar1"-->
-        <!--android:layout_height="48dp" />-->
+        android:layout_height="match_parent"
+        android:background="#f00"
+        android:fadingEdge="none"
+        android:overScrollMode="never"
+        app:layout_behavior="com.example.ck.nest.MyListenerBehavior"/>
+
 </android.support.design.widget.CoordinatorLayout>
 
