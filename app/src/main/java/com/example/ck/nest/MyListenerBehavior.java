@@ -144,6 +144,9 @@ public class MyListenerBehavior extends CoordinatorLayout.Behavior {
 
     @Override
     public void onNestedScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+        if(!canscroll)
+            return ;
+
         //下滑动 child滑动接着dependency 滑动，
         if (dyUnconsumed < 0 && coordinatorLayout.getScrollY() > -overScroll) {
             scrollBy(coordinatorLayout, dyUnconsumed);
@@ -158,6 +161,11 @@ public class MyListenerBehavior extends CoordinatorLayout.Behavior {
 
     @Override
     public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dx, int dy, int[] consumed) {
+        if(!canscroll) {
+            consumed[1]=dy;
+            return;
+        }
+
         //上滑动 dependency 先滑动，接着child滑动
         if (dy > 0 && coordinatorLayout.getScrollY() < originalHeight) {
             Log.i(TAG, "onNestedPreScroll: " + dy);
@@ -172,6 +180,8 @@ public class MyListenerBehavior extends CoordinatorLayout.Behavior {
 
     @Override
     public boolean onNestedFling(CoordinatorLayout coordinatorLayout, View child, View target, float velocityX, float velocityY, boolean consumed) {
+        if(!canscroll)
+            return true;
 
         if (velocityY < 0 && coordinatorLayout.getScrollY() >0) {
             Log.i(TAG, "onNestedFling: " + velocityY);
@@ -187,6 +197,8 @@ public class MyListenerBehavior extends CoordinatorLayout.Behavior {
 
     @Override
     public boolean onNestedPreFling(CoordinatorLayout coordinatorLayout, View child, View target, float velocityX, float velocityY) {
+        if(!canscroll)
+            return true;
 //        //上滑
         if (velocityY > 0 && coordinatorLayout.getScrollY() != originalHeight) {
             resetType(FlingRunnable.PRE_FLING);
