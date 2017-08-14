@@ -134,6 +134,9 @@ public class MyListenerBehavior extends CoordinatorLayout.Behavior {
     public void onNestedScrollAccepted(CoordinatorLayout coordinatorLayout, View child, View directTargetChild, View target, int nestedScrollAxes) {
         super.onNestedScrollAccepted(coordinatorLayout, child, directTargetChild, target, nestedScrollAxes);
         scrollCompat.abortAnimation();
+        Log.i(TAG, "onNestedScrollAccepted: ");
+        if(valueAnimator!=null)
+            valueAnimator.cancel();
     }
 
     @Override
@@ -144,8 +147,6 @@ public class MyListenerBehavior extends CoordinatorLayout.Behavior {
 
     @Override
     public void onNestedScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
-        if(valueAnimator!=null)
-            valueAnimator.cancel();
 
         //下滑动 child滑动接着dependency 滑动，
         if (dyUnconsumed < 0 && coordinatorLayout.getScrollY() > -overScroll) {
@@ -161,8 +162,6 @@ public class MyListenerBehavior extends CoordinatorLayout.Behavior {
 
     @Override
     public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dx, int dy, int[] consumed) {
-        if(valueAnimator!=null)
-            valueAnimator.cancel();
 
         //上滑动 dependency 先滑动，接着child滑动
         if (dy > 0 && coordinatorLayout.getScrollY() < originalHeight) {
@@ -178,8 +177,6 @@ public class MyListenerBehavior extends CoordinatorLayout.Behavior {
 
     @Override
     public boolean onNestedFling(CoordinatorLayout coordinatorLayout, View child, View target, float velocityX, float velocityY, boolean consumed) {
-        if(valueAnimator!=null)
-            valueAnimator.cancel();
 
         if (velocityY < 0 && coordinatorLayout.getScrollY() >0) {
             Log.i(TAG, "onNestedFling: " + velocityY);
@@ -195,8 +192,6 @@ public class MyListenerBehavior extends CoordinatorLayout.Behavior {
 
     @Override
     public boolean onNestedPreFling(CoordinatorLayout coordinatorLayout, View child, View target, float velocityX, float velocityY) {
-        if(valueAnimator!=null)
-            valueAnimator.cancel();
 //        //上滑
         if (velocityY > 0 && coordinatorLayout.getScrollY() != originalHeight) {
             resetType(FlingRunnable.PRE_FLING);
