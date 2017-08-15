@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Interpolator;
 
 import java.lang.ref.SoftReference;
 
@@ -37,6 +38,14 @@ public class MyListenerBehavior extends CoordinatorLayout.Behavior {
     //监听
     private FinishScrollListener flistener;
 
+    static final Interpolator sQuinticInterpolator = new Interpolator() {
+        @Override
+        public float getInterpolation(float t) {
+            t -= 1.0f;
+            return t * t * t * t * t + 1.0f;
+        }
+    };
+
     public static MyListenerBehavior getBehavior(View view){
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) view.getLayoutParams();
         MyListenerBehavior behavior = (MyListenerBehavior) layoutParams.getBehavior();
@@ -45,7 +54,7 @@ public class MyListenerBehavior extends CoordinatorLayout.Behavior {
 
     public MyListenerBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
-        scrollCompat = ScrollerCompat.create(context);
+        scrollCompat = ScrollerCompat.create(context,sQuinticInterpolator);
         flistener = new FinishScrollListener() {
             @Override
             public void onFinsh(final CoordinatorLayout parent, View dependency, View child, int type, final int speed) {
@@ -259,6 +268,7 @@ public class MyListenerBehavior extends CoordinatorLayout.Behavior {
                 Log.i(TAG, "handlerComputerSpeed: " + currVelocity);
                 scroller.abortAnimation();
                 listener.onFinsh(parent, dependency, child, type, (int) currVelocity);
+
 
             } else {
                 ViewCompat.postOnAnimation(dependency, this);
